@@ -18,15 +18,18 @@ import com.midterm2021.quocanle.databinding.ActionRowItemBinding;
 
 import java.util.ArrayList;
 
+// Class này dùng để hiển thị các action đã thực hiện
 public class ActionExcuteAdapter extends RecyclerView.Adapter<ActionExcuteAdapter.ViewHolder> {
     private ArrayList<ActionExcute> actionExcutes;
     private Context context;
 
+    // Constructor
     public ActionExcuteAdapter(ArrayList<ActionExcute> actionExcutes, Context context) {
         this.actionExcutes = actionExcutes;
         this.context = context;
     }
 
+    // Constructor
     public ActionExcuteAdapter(ArrayList<ActionExcute> actionExcutes) {
         this.actionExcutes = actionExcutes;
     }
@@ -34,16 +37,18 @@ public class ActionExcuteAdapter extends RecyclerView.Adapter<ActionExcuteAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.action_row_item, parent, false);
+        // layout của mỗi item
         ActionRowItemBinding binding = ActionRowItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);
         return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        // Hiển thị thông tin của mỗi item
         holder.binding.tvPosition.setText(String.valueOf(position + 1));
         holder.binding.setActionExcute(actionExcutes.get(position));
 
+        // Xử lý sự kiện khi click vào nút xóa
         holder.binding.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,7 +77,7 @@ public class ActionExcuteAdapter extends RecyclerView.Adapter<ActionExcuteAdapte
         return actionExcutes.size();
     }
 
-
+    // Class ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ActionRowItemBinding binding;
         public ViewHolder(ActionRowItemBinding binding) {

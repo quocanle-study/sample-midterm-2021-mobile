@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+// Class này dùng để lưu các hành động đã thực hiện
 @Entity
 public class ActionExcute {
     @PrimaryKey (autoGenerate = true)

@@ -16,16 +16,19 @@ import com.midterm2021.quocanle.model.ActionExcuteAdapter;
 
 import java.util.ArrayList;
 
+// Class này dùng để hiển thị lịch sử các action đã thực hiện
 public class HistoryActivity extends AppCompatActivity {
     private static HistoryActivity instance;
     private ActivityHistoryBinding binding;
     private ArrayList<ActionExcute> actionList;
     public ActionExcuteAdapter adapter;
 
+    // Constructor
     public HistoryActivity() {
         instance = this;
     }
 
+    // Hàm này trả về instance của HistoryActivity
     public static HistoryActivity getInstance() {
         return instance;
     }
@@ -41,19 +44,25 @@ public class HistoryActivity extends AppCompatActivity {
 //            return insets;
 //        });
 
+        // binding layout
         binding = ActivityHistoryBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // set toolbar
         setSupportActionBar(binding.toolbar);
 
+        // get instance của database
         AppDatabase appDatabase = AppDatabase.getInstance(getApplicationContext());
         ActionDAO actionDAO = appDatabase.actionDAO();
 
+
+        // set adapter cho recyclerview
         actionList = new ArrayList<>();
         adapter = new ActionExcuteAdapter(actionList, this);
         binding.rvHistory.setAdapter(adapter);
         binding.rvHistory.setLayoutManager(new LinearLayoutManager(this));
 
+        // Lấy dữ liệu từ database và hiển thị lên recyclerview
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
@@ -71,6 +80,7 @@ public class HistoryActivity extends AppCompatActivity {
         });
     }
 
+    // Hàm này tạo menu bar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_bar, menu);

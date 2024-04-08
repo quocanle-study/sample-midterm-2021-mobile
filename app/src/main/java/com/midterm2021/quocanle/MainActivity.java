@@ -24,10 +24,12 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private static final String[] itemsSpiner = {"count-letter-digit", "remove-even", "count-upper-lower", "perfect-number"};
 
+    // Constructor
     public MainActivity() {
         instance = this;
     }
 
+    // Hàm này trả về instance của MainActivity
     public static Activity getInstance() {
         return instance;
     }
@@ -43,21 +45,25 @@ public class MainActivity extends AppCompatActivity {
 //            return insets;
 //        });
 
+        // binding layout
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // set toolbar
         setSupportActionBar(binding.toolbar);
 
+        // set adapter cho spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
                 android.R.layout.simple_spinner_item,itemsSpiner);
 
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spinner.setAdapter(adapter);
-//        binding.spinner.setOnItemSelectedListener(this);
 
+        // get instance của database
         AppDatabase appDatabase = AppDatabase.getInstance(getApplicationContext());
         ActionDAO actionDAO = appDatabase.actionDAO();
 
+        // Xử lý sự kiện khi click vào nút History
         binding.btnHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,15 +72,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // Xử lý sự kiện khi click vào nút Submit
         binding.btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Kiểm tra xem người dùng đã nhập input chưa
                 if (binding.etInput.getText().toString().isEmpty()) {
                     CharSequence text = "Please enter input!";
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(MainActivity.this, text, duration);
                     return;
                 }
+                // Thực hiện action tương ứng với item được chọn
                 try {
                     String input = binding.etInput.getText().toString();
                     String selected = binding.spinner.getSelectedItem().toString();
@@ -101,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
 
+            // Hàm này thực hiện perfect number
             private String perfectNumber(String input) {
                 String[] numbers = input.split(", ");
                 String result = "";
@@ -122,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
                 return result;
             }
 
+            // Hàm này thực hiện count upper lower
             private String countUpperLower(String input) {
                 int upper = 0;
                 int lower = 0;
@@ -136,6 +147,7 @@ public class MainActivity extends AppCompatActivity {
                 return "Upper case: " + upper + "\nLower case: " + lower;
             }
 
+            // Hàm này thực hiện remove even
             private String removeEven(String input) {
                 String[] numbers = input.split(", ");
                 String result = "";
@@ -151,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 return result;
             }
 
+            // Hàm này thực hiện count letter digit
             private String countLetterDigit(String input) {
                 int letter = 0;
                 int digit = 0;
